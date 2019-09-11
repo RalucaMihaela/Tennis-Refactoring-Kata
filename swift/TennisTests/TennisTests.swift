@@ -6,6 +6,7 @@ let parameters = [
     (2, 2, "Thirty-All"),
     (3, 3, "Deuce"),
     (4, 4, "Deuce"),
+    (4, 4, "Deuce"),
     
     (1, 0, "Fifteen-Love"),
     (0, 1, "Love-Fifteen"),
@@ -99,10 +100,10 @@ extension TennisTests {
         let highestScore = max(player1Score, player2Score);
         for i in 0..<highestScore {
             if i < player1Score {
-                game.wonPoint("player1")
+                game.wonPoint(.playerOne)
             }
             if i < player2Score {
-                game.wonPoint("player2")
+                game.wonPoint(.playerTwo)
             }
         }
         XCTAssertEqual(game.score, expectedScore)

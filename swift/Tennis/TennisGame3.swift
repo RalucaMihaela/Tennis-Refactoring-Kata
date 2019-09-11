@@ -27,13 +27,11 @@ class TennisGame3: TennisGame {
         }
     }
     
-    func wonPoint(_ playerName: String) {
-        if playerName == "player1" {
+    func wonPoint(_ playerName: Players) {
+        if playerName == .playerOne {
             p1 += 1
         } else {
             p2 += 1
         }
     }
-
-    
 }

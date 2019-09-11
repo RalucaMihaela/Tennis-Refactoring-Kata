@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		520065DE1F8972C5006EDBDF /* TennisGame2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520065DD1F8972C5006EDBDF /* TennisGame2.swift */; };
-		520065E01F897A01006EDBDF /* TennisGame3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520065DF1F897A01006EDBDF /* TennisGame3.swift */; };
+		17245BA1232583D80096F435 /* TennisGame3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520065DF1F897A01006EDBDF /* TennisGame3.swift */; };
+		17245BA2232583F20096F435 /* TennisGame2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520065DD1F8972C5006EDBDF /* TennisGame2.swift */; };
 		52EF22791F892FF600CAD019 /* TennisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EF22781F892FF600CAD019 /* TennisTests.swift */; };
 		52EF22801F89307F00CAD019 /* TennisGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EF227F1F89307F00CAD019 /* TennisGame.swift */; };
 		52EF22821F89316100CAD019 /* TennisGame1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EF22811F89316100CAD019 /* TennisGame1.swift */; };
@@ -139,10 +139,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				520065E01F897A01006EDBDF /* TennisGame3.swift in Sources */,
+				17245BA2232583F20096F435 /* TennisGame2.swift in Sources */,
 				52EF22821F89316100CAD019 /* TennisGame1.swift in Sources */,
-				520065DE1F8972C5006EDBDF /* TennisGame2.swift in Sources */,
 				52EF22801F89307F00CAD019 /* TennisGame.swift in Sources */,
+				17245BA1232583D80096F435 /* TennisGame3.swift in Sources */,
 				52EF22791F892FF600CAD019 /* TennisTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
