@@ -14,42 +14,68 @@ enum ScoreType: String {
     case thirty = "Thirty"
     case forty = "Forty"
 }
-
+ 
 enum Players: String {
     case playerOne = "player1"
     case playerTwo = "player2"
 }
 
+class Score {
+    let player: Players
+    var score: Int
+    
+    init(player: Players, score: Int) {
+        self.player = player
+        self.score = score
+    }
+}
+
 class TennisGame1: TennisGame {
-    private let player1: String
-    private let player2: String
-    private var score1: Int
-    private var score2: Int
-    private var currentScore: [Players:Int]
+    private var currentScore: [Score]
+    private var scoreType: [Int: ScoreType]
     
     required init(player1: String, player2: String) {
-        self.player1 = player1
-        self.player2 = player2
-        self.score1 = 0
-        self.score2 = 0
-        self.currentScore[.playerOne] = 0
-        self.currentScore[.playerTwo] = 0
+        self.currentScore.append(Score(player: .playerOne, score: 0))
+        self.currentScore.append(Score(player: .playerTwo, score: 0))
+        
+        self.scoreType[0] = .loveAll
+        self.scoreType[1] = .fifteenAll
+        self.scoreType[2] = .thirtyAll
+        self.scoreType[3] = .deuce
+        
+        self.scoreType[-1] = .advantagePlayerOne
+        
     }
 
     func wonPoint(_ playerName: Players) {
-        self.currentScore[playerName] = 1
+        self.currentScore.first(where: {$0.player == playerName})?.score += 1
     }
     
     var score:String? {
         return scoreResult()
     }
     
+    private var scorePlayerOne: Int {
+        return currentScore.first(where: {$0.player == .playerOne})?.score ?? 0
+    }
     
-    func scoreResult() -> String {
-        var tempScore = ""
-        if score1 == score2 {
+    private var scorePlayerTwo: Int {
+        return currentScore.first(where: {$0.player == .playerTwo})?.score ?? 0
+    }
+    
+    private var isEqual: Bool {
+        return self.scorePlayerTwo == self.scorePlayerOne ? true : false
+    }
+    
+    private var isTheGameFinished: Bool {
+        return self.scorePlayerTwo >= 4 || self.scorePlayerOne >= 4 ? true : false
+    }
+    
+    func scoreResult() -> ScoreType? {
+        var tempScore: ScoreType?
+        if self.isEqual {
            tempScore = self.equalResults()
-        } else if score1>=4 || score2>=4 {
+        } else if self.isTheGameFinished {
             tempScore = self.finalResults()
         } else {
             tempScore = self.matchResults()
@@ -57,54 +83,18 @@ class TennisGame1: TennisGame {
         return tempScore
     }
     
-    private func equalResults() -> String {
-        var scoreDetail = ""
-        switch score1
-        {
-        case 0:
-            //we should use an enum to set the score, so that if we want to change something, we can easily find where to modify
-            scoreDetail = ScoreType.loveAll.rawValue
-            
-        case 1:
-            scoreDetail = ScoreType.fifteenAll.rawValue
-            
-        case 2:
-            scoreDetail = ScoreType.thirtyAll.rawValue
-            
-        default:
-            scoreDetail = ScoreType.deuce.rawValue
-            
-        }
-        return scoreDetail
+    private func equalResults() -> ScoreType? {
+        return scoreType[self.scorePlayerOne]
     }
     
-    private func finalResults() -> String {
-        var scoreDetail = ""
-        let minusResult = score1-score2
-        
-        switch minusResult {
-        case -1:
-            scoreDetail = ScoreType.advantagePlayerTwo.rawValue
-        case 1:
-            scoreDetail = ScoreType.advantagePlayerOne.rawValue
-        default:
-            scoreDetail = minusResult >= 2 ? ScoreType.winPlayerOne.rawValue : ScoreType.winPlayerTwo.rawValue
-        }
-        
-        return scoreDetail
+    private func finalResults() -> ScoreType? {
+        let result = CompareScores(scorePlayerOne: self.scorePlayerOne, scorePlayerTwo: self.scorePlayerTwo)
+        return result.compareScores()
     }
     
-    private func matchResults() -> String {
+    private func matchResults() -> ScoreType? {
         var tempScore = 0
-        var scoreDetail = ""
-        
-        tempScore = 1
-        scoreDetail = nil + 'fifteen'
-        
-        scoreDetail= "fifteen-"
-        tempScore = 2
-        scoreDetail = 'fifteen-' + 'thirty' -> 'fifteen-thirty'
-        
+        var scoreDetail = ""ovi
         
         for i in 1..<3
         {
@@ -136,5 +126,29 @@ class TennisGame1: TennisGame {
         }
         
         return scoreDetail
+    }
+}
+
+class CompareScores { // this should be a noun
+    private var scorePlayerOne: Int
+    private var scorePlayerTwo: Int
+    
+    init(scorePlayerOne: Int, scorePlayerTwo: Int){
+        self.scorePlayerOne = scorePlayerOne
+        self.scorePlayerTwo = scorePlayerTwo
+    }
+    
+    func compareScores() -> ScoreType { // this hsould be a verb
+        let difference = self.scorePlayerOne - self.scorePlayerTwo
+        
+        if difference < 0 {
+            return .advantagePlayerTwo
+        } else if difference > 0 && difference < 2 {
+            return .advantagePlayerOne
+        } else if difference >= 2 {
+            return .winPlayerOne
+        } else {
+            return .winPlayerTwo
+        }
     }
 }
